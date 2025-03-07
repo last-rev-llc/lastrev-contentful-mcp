@@ -33,13 +33,13 @@ This MCP server acts as a bridge between AI tools and Contentful's Content Manag
 2. **Install dependencies**:
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Build the project**:
 
    ```bash
-   npm run build
+   pnpm run build
    ```
 
 4. **Set up your environment variables**:
@@ -81,16 +81,16 @@ The MCP Inspector provides a visual interface for testing and debugging your MCP
 1. **Basic mode**:
 
    ```bash
-   npm run inspect
+   pnpm run inspect
    ```
 
 2. **Watch mode** (automatically restarts when code changes):
 
    ```bash
-   npm run inspect-watch
+   pnpm run inspect-watch
    ```
 
-3. **Access the GUI** by opening [http://localhost:5173](http://localhost:5173) in your browser.
+3. **Access the GUI** by opening [http://localhost:8080/?proxyPort=9000](http://localhost:8080/?proxyPort=9000) in your browser.
 
 ### Inspector Features
 
@@ -101,7 +101,18 @@ The MCP Inspector provides a visual interface for testing and debugging your MCP
 
 ## Integrating with Cursor
 
-### Project-specific Configuration (Recommended)
+### Running locally with Cursor
+
+1. MAKE A NEW CONTENTFUL ENVRIONMENT FIRST!!
+2. Make sure you have a .env file with the `CONTENTFUL_MANAGEMENT_ACCESS_TOKEN`, `SPACE_ID` and `ENVIRONMENT_ID` set.
+3. Run the build using `pnpm build`
+4. Open up Cursor > Settings > MCP
+5. Add a new MCP server
+6. Give it a name `contentful-api` and choose `command` as the option
+7. Add the full path to the `run-mcp.sh` file (e.g. `/Users/bradtaylor/Github/contentful-mcp/run-mcp.sh`)
+8. Then Ask Cursor Agent to do tasks for you in Contentful, sitback and watch the magic
+
+### Project-specific Configuration
 
 1. Create `.cursor/mcp.json` in your project root:
 
@@ -118,34 +129,13 @@ The MCP Inspector provides a visual interface for testing and debugging your MCP
 
 2. Restart Cursor.
 
-### Global Configuration
-
-1. Create or edit the MCP config file in Cursor's configuration directory:
-   - macOS: `~/Library/Application Support/Cursor/mcp_config.json`
-   - Windows: `%APPDATA%\Cursor\mcp_config.json`
-   - Linux: `~/.config/Cursor/mcp_config.json`
-
-2. Add the configuration:
-
-   ```json
-   {
-     "mcpServers": {
-       "contentful": {
-         "command": "node",
-         "args": ["/absolute/path/to/contentful-mcp/bin/mcp-server.js"]
-       }
-     }
-   }
-   ```
-
-3. Restart Cursor.
-
 ## Development
 
-- **Build**: `npm run build` - Compiles TypeScript and bundles server code
-- **Development**: `npm run dev` - Watches for changes and rebuilds automatically
-- **Testing**: `npm test` - Runs tests using Vitest
-- **Type checking**: `npm run typecheck` - Verifies TypeScript types
+- **Build**: `pnpm run build` - Compiles TypeScript and bundles server code
+- **Development**: `pnpm run dev` - Watches for changes and rebuilds automatically
+- **Inspect**: `pnpm run inspect` - Will start the process and allows you to debug in the GUI
+- **Testing**: `pnpm test` - Runs tests using Vitest
+- **Type checking**: `pnpm run typecheck` - Verifies TypeScript types
 
 ## Available Tools
 

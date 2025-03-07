@@ -52,7 +52,7 @@ async function cleanup() {
 nodemon({
   watch: ['src'],
   ext: 'ts',
-  exec: 'npm run build'
+  exec: 'pnpm run build'
 });
 
 // Handle nodemon events

@@ -21,13 +21,13 @@ This guide helps you quickly set up and use the Contentful MCP Server with Curso
 2. **Install dependencies:**
 
     ```bash
-    npm install
+    pnpm install
     ```
 
 3. **Build the project:**
 
     ```bash
-    npm run build
+    pnpm run build
     ```
 
 4. **Configure environment variables:**
@@ -290,7 +290,7 @@ These tools are only available if `SPACE_ID` and `ENVIRONMENT_ID` environment va
 ## Dependencies and Requirements
 
 * **Node.js:** Version 18 or higher.
-* **npm:**  Package manager.
+* **pnpm:**  Package manager.
 * **Contentful Account:**  A Contentful account with a Space and Content Management API access token or configured App Identity.
 * **Dependencies (package.json):**
   * `@contentful/node-apps-toolkit`
@@ -309,7 +309,7 @@ For development and testing, the MCP Inspector provides a web interface to inter
 1. Start the inspector in watch mode:
 
     ```bash
-    npm run inspect-watch
+    pnpm run inspect-watch
     ```
 
 2. Open the inspector in your browser at `http://localhost:5173`.
@@ -323,3 +323,9 @@ For secure authentication in backend systems, configure the server to use App Id
 ### Pagination Handling in AI Agents
 
 When using list operations, the server returns paginated results to prevent context window overflow. AI agents should be designed to interpret the `remainingMessage` and `skip` values in the response. This allows the agent to offer users the option to retrieve subsequent pages of data, enabling efficient navigation through large datasets.
+
+You can also use automatic restarts with:
+
+```bash
+pnpm run inspect-watch
+```
