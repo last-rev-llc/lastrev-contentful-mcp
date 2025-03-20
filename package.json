@@ -26,7 +26,8 @@
     "inspect": "node -r dotenv/config ./scripts/inspect.js",
     "inspect-watch": "node ./scripts/inspect-watch.js",
     "test": "vitest run --config vitest.config.ts",
-    "test:watch": "vitest watch --config vitest.config.ts"
+    "test:watch": "vitest watch --config vitest.config.ts",
+    "run-npx": "dotenv -- npx @last-rev/contentful-mcp-server --management-token \"$CONTENTFUL_MANAGEMENT_ACCESS_TOKEN\" --space-id \"$SPACE_ID\" --environment-id \"$ENVIRONMENT_ID\""
   },
   "dependencies": {
     "@contentful/node-apps-toolkit": "^3.10.2",
@@ -49,6 +50,7 @@
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "chai": "^5.0.0",
+    "dotenv-cli": "^8.0.0",
     "esbuild": "^0.19.9",
     "eslint": "^8.57.1",
     "eslint-plugin-perfectionist": "^4.7.0",

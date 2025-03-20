@@ -1,0 +1,2 @@
+#!/bin/bash
+export $(grep -v '^#' .env | xargs) && npx @last-rev/contentful-mcp-server --management-token "$CONTENTFUL_MANAGEMENT_ACCESS_TOKEN" --space-id "$SPACE_ID" --environment-id "$ENVIRONMENT_ID" 

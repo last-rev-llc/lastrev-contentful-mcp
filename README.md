@@ -117,14 +117,19 @@ The MCP Inspector provides a visual interface for testing and debugging your MCP
 1. Create `.cursor/mcp.json` in your project root:
 
    ```json
-   {
-     "mcpServers": {
-       "contentful": {
-         "command": "./run-mcp.sh",
-         "args": []
-       }
-     }
-   }
+   "contentful-mcp-server": {
+      "args": [
+        "-y",
+        "@last-rev/contentful-mcp-server",
+        "--management-token",
+        "API_TOKEN", // REplace with token
+        "--space-id",
+        "SPACE_ID", // Replace with Space id
+        "--environment-id",
+        "ENVIRONMENT_ID" // Replace with environment
+      ],
+      "command": "npx"
+    },
    ```
 
 2. Restart Cursor.
