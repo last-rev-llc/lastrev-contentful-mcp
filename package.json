@@ -1,5 +1,5 @@
 {
-  "name": "@lastrev/contentful-mcp-server",
+  "name": "@last-rev/contentful-mcp-server",
   "version": "0.1.0",
   "description": "MCP server for Contentful Content Management API",
   "license": "MIT",
