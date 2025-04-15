@@ -138,7 +138,7 @@ The MCP Inspector provides a visual interface for testing and debugging your MCP
 
 - **Build**: `pnpm run build` - Compiles TypeScript and bundles server code
 - **Development**: `pnpm run dev` - Watches for changes and rebuilds automatically
-- **Inspect**: `pnpm run inspect` - Will start the process and allows you to debug in the GUI
+- **Inspect**: `pnpm run inspect -e` - Will start the process and allows you to debug in the GUI using your environment variables in your .env file
 - **Testing**: `pnpm test` - Runs tests using Vitest
 - **Type checking**: `pnpm run typecheck` - Verifies TypeScript types
 

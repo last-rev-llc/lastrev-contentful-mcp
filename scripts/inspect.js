@@ -11,24 +11,39 @@ const { console } = globalThis;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Get the path to our MCP server script
 const serverPath = resolve(__dirname, "../bin/mcp-server.js");
 
-// Set environment variables for ports
-process.env.CLIENT_PORT = process.env.CLIENT_PORT || "8080";
-process.env.SERVER_PORT = process.env.SERVER_PORT || "9000";
+// Use default MCP Inspector ports (6274 for client, 6277 for proxy)
+// Only set these if you need custom ports
+// process.env.CLIENT_PORT = process.env.CLIENT_PORT || "6274";
+// process.env.SERVER_PORT = process.env.SERVER_PORT || "6277";
 
-// Add debug flag to help diagnose tool registration issues
-process.env.DEBUG = "mcp:*";
+// List of environment variables to pass to the MCP server
+const envVarsToPass = [
+  "CONTENTFUL_MANAGEMENT_ACCESS_TOKEN",
+  "SPACE_ID",
+  "ENVIRONMENT_ID",
+  "CONTENTFUL_HOST",
+  "PRIVATE_KEY",
+  "APP_ID"
+];
 
-const args = ["npx", "@modelcontextprotocol/inspector", "node", serverPath];
+// Build the command array with environment variables
+const cmdArgs = [];
 
-// Add environment variables as CLI arguments if they exist
-if (process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN) {
-  args.push(`--headers=${process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN}`);
+// Add environment variables as -e flags
+for (const varName of envVarsToPass) {
+  if (process.env[varName]) {
+    cmdArgs.push("-e", `${varName}=${process.env[varName]}`);
+  }
 }
 
-// Execute the command
-const inspect = spawn(args[0], args.slice(1), {
+// Add the server command and path
+cmdArgs.push("node", serverPath);
+
+// Create the spawn command for npx @modelcontextprotocol/inspector
+const inspect = spawn("npx", ["@modelcontextprotocol/inspector", ...cmdArgs], {
   stdio: "inherit",
   env: process.env
 });
