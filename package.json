@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@contentful/node-apps-toolkit": "^3.10.2",
+    "@contentful/rich-text-from-markdown": "^16.0.0",
     "@modelcontextprotocol/sdk": "1.0.1",
     "contentful-management": "^10.46.4",
     "dotenv": "^16.4.7",

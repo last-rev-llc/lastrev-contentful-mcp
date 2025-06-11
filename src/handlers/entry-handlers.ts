@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getContentfulClient } from "../config/client.js"
 import { summarizeData } from "../utils/summarizer.js"
+import { processFieldsForRichText } from "../utils/richTextConverter.js"
 import { CreateEntryProps, EntryProps, QueryOptions } from "contentful-management"
 
 export const entryHandlers = {
@@ -19,13 +20,13 @@ export const entryHandlers = {
       query: {
         ...args.query,
         limit: Math.min(args.query.limit || 3, 3),
-        skip: args.query.skip || 0
+        skip: args.query.skip || 0,
       },
     })
 
     const summarized = summarizeData(entries, {
       maxItems: 3,
-      remainingMessage: "To see more entries, please ask me to retrieve the next page."
+      remainingMessage: "To see more entries, please ask me to retrieve the next page.",
     })
 
     return {
@@ -47,11 +48,18 @@ export const entryHandlers = {
       contentTypeId: args.contentTypeId,
     }
 
+    const contentfulClient = await getContentfulClient()
+
+    // Get the content type definition to understand field types
+    const contentType = await contentfulClient.contentType.get(params)
+
+    // Process fields to convert any RichText fields from markdown/plain text to rich text format
+    const processedFields = await processFieldsForRichText(args.fields, contentType.fields)
+
     const entryProps: CreateEntryProps = {
-      fields: args.fields,
+      fields: processedFields,
     }
 
-    const contentfulClient = await getContentfulClient()
     const entry = await contentfulClient.entry.create(params, entryProps)
     return {
       content: [{ type: "text", text: JSON.stringify(entry, null, 2) }],
@@ -93,8 +101,19 @@ export const entryHandlers = {
     const contentfulClient = await getContentfulClient()
     const currentEntry = await contentfulClient.entry.get(params)
 
+    // Get the content type definition to understand field types
+    const contentTypeParams = {
+      spaceId,
+      environmentId,
+      contentTypeId: currentEntry.sys.contentType.sys.id,
+    }
+    const contentType = await contentfulClient.contentType.get(contentTypeParams)
+
+    // Process fields to convert any RichText fields from markdown/plain text to rich text format
+    const processedFields = await processFieldsForRichText(args.fields, contentType.fields)
+
     const entryProps: EntryProps = {
-      fields: args.fields,
+      fields: processedFields,
       sys: currentEntry.sys,
     }
 
